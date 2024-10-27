@@ -1,6 +1,11 @@
 function keyupFunction(even) {
     const gamerPress = even.key;
 
+    // stop the game 
+    // if (gamerPress === 'Escape') {
+    //     gameOver();
+    // }
+
     const currentAlphabetElement = document.getElementById('show-alphabet');
     const currentAlphabet = currentAlphabetElement.innerText;
     const alphabet = currentAlphabet.toLowerCase();
@@ -18,15 +23,15 @@ function keyupFunction(even) {
         const restLife = currentLife - 1;
         setTextElementById('current-life', restLife);
 
-        if(restLife===0){
-            
+        if (restLife === 0) {
+            gameOver();
         }
     }
 
     // console.log(gamerPress, alphabet)
 }
 
-document.addEventListener('keyup', keyupFunction)
+document.addEventListener('keyup', keyupFunction);
 
 function continueGame() {
     const alphabet = randomAlphabet();
@@ -38,6 +43,22 @@ function continueGame() {
 
 function play() {
     addClassList('home');
+    addClassList('score');
     removeClassList('play-ground');
+
+    setTextElementById('current-life', 5);
+    setTextElementById('current-score', 0);
+
     continueGame();
+}
+
+function gameOver() {
+    addClassList('play-ground');
+    removeClassList('score');
+
+    const score = getElementByIdParseint('current-score');
+    setTextElementById('final-score', score);
+
+    const currentAlphabet = getElementTextById('show-alphabet');
+    removeBgColor(currentAlphabet);
 }
